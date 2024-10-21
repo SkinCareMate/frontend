@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import FaceCapture from "../../components/container/FaceCapture";
 
 function Home() {
-  return(
+
+  return (
     <div>
       <h1>Home</h1>
+      <FaceCapture />
     </div>
   );
 }

@@ -1,30 +1,50 @@
 import axios from 'axios';
+import { setCookie, getCookie, removeCookie } from '../Cookie';
 
-export const login = async (email, password) => {
+export const login = async (userData) => {
   try {
-    const response = await axios.post('api/accounts/login', { id, password });
-    const { token } = response.data;
+    const response = await axios.post('api/accounts/login/', 
+      {
+        id: userData.id,
+        password: userData.password
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      }
+    );
     
-    // 토큰을 로컬 스토리지에 저장 -> react-cookie로 변경
-    localStorage.setItem('token', token);
-    
-    // axios의 기본 헤더에 토큰 설정 -> accessToken 설정
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    
-    return response.data;
+    console.log('서버 응답:', response);  // 디버깅을 위한 로그
+
+    if (response.data.access && response.data.refresh) {
+      // 쿠키에 accessToken, refreshToken 저장
+      setCookie('accessToken', response.data.access);
+      setCookie('refreshToken', response.data.refresh);
+      
+      // axios의 기본 헤더에 accessToken 설정
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+      
+      return response.data;
+    } else {
+      throw new Error('토큰이 없습니다.');
+    }
   } catch (error) {
-    console.error('로그인에 실패했습니다:', error);
+    console.error('로그인 에러:', error.response ? error.response.data : error.message);
     throw error;
   }
 };
 
+// 나중에 로그아웃 api 생기면 그때 추가 아님 말고
 export const logout = () => {
-  localStorage.removeItem('token');
+  removeCookie('accessToken');
+  removeCookie('refreshToken');
   delete axios.defaults.headers.common['Authorization'];
 };
 
 export const isAuthenticated = () => {
-  return !!localStorage.getItem('token');
+  return !!getCookie('accessToken');
 };
 
 // 기타 인증 관련 함수들...
