@@ -6,7 +6,7 @@ import NavigationBar from "../../components/navbar/NavigationBar";
 import styled from "styled-components";
 
 const StyledMainContainer = styled(MainContainer)`
-  background-color: #f0f8dc; /* 연한 녹색 배경을 MainContainer에 설정 */
+  background-color: #ffffff; /* 연한 녹색 배경을 MainContainer에 설정 */
 `;
 
 const CenteredContentContainer = styled(ContentContainer)`
@@ -20,7 +20,8 @@ const CenteredContentContainer = styled(ContentContainer)`
 
 const SignupInfo = styled.div`
   flex: 1;
-  margin-right: 40px;
+  margin-right: 20px;
+  margin-left: 10%;
 
   h1 {
     font-size: 2em;
@@ -157,7 +158,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post("/register/", {
+      const response = await axios.post("api/accounts/register/", {
         id: data.id,
         age: data.age,
         name: data.name,

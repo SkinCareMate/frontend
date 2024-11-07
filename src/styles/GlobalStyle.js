@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
       url("./fonts/Pretendard-Light.otf") format("opentype"),
       url("./fonts/Pretendard-ExtraLight.otf") format("opentype"),
       url("./fonts/Pretendard-SemiBold.otf") format("opentype");
-    font-weight: 400;
+    font-weight: 700;
     font-style: normal;
   }
 

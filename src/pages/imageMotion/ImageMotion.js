@@ -40,7 +40,7 @@ function ImageMotion() {
     };
 
     const backgroundImageStyle = {
-        background: `url(https://hwahae-homepage.s3.ap-northeast-2.amazonaws.com/images/main_2023-09-11-09-34.jpg) center center / cover no-repeat`,
+        background: `url(/mainimg.jpg) center center / cover no-repeat`,
         position: 'fixed',
         top: '0px',
         left: '0px',
@@ -89,25 +89,25 @@ function ImageMotion() {
             <div style={backgroundImageStyle}></div>
             <div style={centerStyle}>
                 <div style={{ opacity: getFadeOutOpacity(0, 0.2) }}>
-                    <h1>새로운 뷰티의<br/>발견</h1>
-                    <p>대한민국 1등 뷰티 앱 화해</p>
+                    <h1 style={{ fontSize: '5em' }}>새로운 뷰티의<br/>발견</h1>
+                    <p style={{ fontSize: '2em' }}>대한민국 1등 뷰티 앱 화해</p>
                 </div>
             </div>
             <div style={centerStyle}>
                 <div style={{ opacity: pTagsOpacity }}>
-                    <p style={{ opacity: getOpacity(0.2, 0.4) }}>
-                        스킨케어부터 메이크업<br/>그리고 이너뷰티까지
+                    <p style={{ opacity: getOpacity(0.2, 0.4), fontSize: '2.5em' }}>
+                        STEP 1.<br/>AI 피부진단을 위한 준비
                     </p>
-                    <p style={{ opacity: getOpacity(0.4, 0.6) }}>
-                        나만의 뷰티를 찾을 수 있도록<br/>화해가 길잡이가 되어 줄게요.
+                    <p style={{ opacity: getOpacity(0.4, 0.6), fontSize: '2.5em' }}>
+                        STEP 2.<br/>사진을 업로드하거나 웹캠을 통한 사진 찍기
                     </p>
-                    <p style={{ opacity: getOpacity(0.6, 0.8) }}>
-                        언제, 어디서나 쉽고 즐겁게<br/>탐색하고 발견해 보세요!
+                    <p style={{ opacity: getOpacity(0.6, 0.8), fontSize: '2.5em' }}>
+                        STEP 3.<br/>분석 결과를 통한 기초화장품 추천 받기
                     </p>
                 </div>
             </div>
             <div style={additionalContentStyle}>
-                <h2>step 넣어서 단계별 구현하고<br />마지막에는 진단 페이지로 넘어갈 수 있는 버튼 넣어주기</h2>
+                <h2>STEP 0.<br />설문을 해주시면 더욱 자세한 진단결과와<br />기초화장품 추천을 받으실수 있어요!</h2>
             </div>
         </div>
     );

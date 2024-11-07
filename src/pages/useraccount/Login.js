@@ -11,6 +11,7 @@ const CenteredContentContainer = styled(ContentContainer)`
   align-items: center; /* 수평 중앙 정렬 */
   justify-content: center; /* 수직 중앙 정렬 */
   height: 80vh; /* 화면 높이의 80% */
+  background-color: #; /*색상 정해야함*/
 `;
 
 const LoginForm = styled.div`
@@ -50,15 +51,16 @@ const InputWrapper = styled.div`
 
 const LoginButton = styled.button`
   padding: 10px 20px;
-  background-color: #d3e4b8; /* 버튼 배경 색상 */
+  background-color: #2FCAB0; /* 버튼 배경 색상 */
   border: none;
   border-radius: 5px;
   font-size: 1em;
   cursor: pointer;
   width: 100%;
+  font: #ffffff; /글자 색상 흰색
 
   &:hover {
-    background-color: #c1d8a8;
+    background-color: #3DF2D4;
   }
 `;
 

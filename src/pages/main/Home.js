@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import FaceCapture from "../../components/container/FaceCapture";
+import NavigationBar from "../../components/navbar/NavigationBar";
+import { ContentContainer, MainContainer } from "../../components/container/Container";
+import ImageMotion from "../imageMotion/ImageMotion";
 
 function Home() {
 
   return (
-    <div>
-      <h1>Home</h1>
-      <FaceCapture />
-    </div>
+    <MainContainer>
+      <NavigationBar />
+      <ContentContainer>
+        <ImageMotion />
+        <h1>dd</h1>
+      </ContentContainer>
+    </MainContainer>
   );
 }
 
