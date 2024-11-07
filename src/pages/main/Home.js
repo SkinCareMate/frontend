@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import NavigationBar from "../../components/navbar/NavigationBar";
 import { ContentContainer, MainContainer } from "../../components/container/Container";
 import ImageMotion from "../imageMotion/ImageMotion";
