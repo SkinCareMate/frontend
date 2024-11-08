@@ -46,7 +46,9 @@ export const logout = () => {
 };
 
 export const isAuthenticated = () => {
-  return !!getCookie('accessToken');
+  const accessToken = getCookie('accessToken');
+  const refreshToken = getCookie('refreshToken');
+  return !!accessToken && !!refreshToken;
 };
 
 // 기타 인증 관련 함수들...
