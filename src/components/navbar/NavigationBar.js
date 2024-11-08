@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../utils/Auth";
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { removeCookie, getCookie } from "../../Cookie"; // getCookie 임포트 추가
 
 const Nav = styled.div`
   position: fixed;
@@ -20,7 +21,7 @@ const Nav = styled.div`
   justify-content: space-between;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.03) 0px 5px 15px;
-  font-size: 1.5em; /* 폰트 크기 추가 */
+  font-size: 1.5em;
 
   @media (max-width: 1440px) and (min-width: 1024px) {
     padding-left: 10%;
@@ -40,12 +41,12 @@ const Logo = styled.img`
   height: auto;
 
   @media (max-width: 1024px) {
-    width: 100px; /* 작은 화면에서 로고 크기 줄임 */
+    width: 100px;
   }
 `;
 
 const Subnav = styled.div`
-  position: relative; /* 드롭다운 메뉴의 기준 위치를 설정 */
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +67,7 @@ const Subnav = styled.div`
 const Img = styled.img`
   width: 50px;
   height: 50px;
-  cursor: pointer; /* 클릭 가능하게 설정 */
+  cursor: pointer;
 `;
 
 const Modal = styled.div`
@@ -74,61 +75,62 @@ const Modal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px; /* 너비 조정 */
-  padding: 20px; /* 내부 여백 추가 */
-  border: 1px solid black; /* 검은 테두리 */
-  background-color: white; /* 흰 배경 */
+  width: 400px;
+  padding: 20px;
+  border: 1px solid black;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1000; /* 모달이 다른 요소 위에 표시되도록 */
+  z-index: 1000;
 `;
 
 const ModalTitle = styled.h2`
-  margin: 0 0 20px 0; /* 제목과 아래 요소 간격 */
+  margin: 0 0 20px 0;
 `;
 
 const InputWrapper = styled.div`
-  width: 100%; /* 너비 100% */
-  margin-bottom: 15px; /* 아래 여백 */
+  width: 100%;
+  margin-bottom: 15px;
 `;
 
 const Input = styled.input`
-  width: 100%; /* 너비 100% */
-  padding: 10px; /* 내부 여백 */
-  border: 1px solid #ccc; /* 테두리 색상 */
-  border-radius: 5px; /* 모서리 둥글게 */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 `;
 
 const LoginButton = styled.button`
-  width: 100%; /* 너비 100% */
-  padding: 10px; /* 내부 여백 */
-  background-color: black; /* 배경 색상 */
-  color: white; /* 글자 색상 */
-  border: none; /* 테두리 없음 */
-  border-radius: 5px; /* 모서리 둥글게 */
-  cursor: pointer; /* 클릭 가능하게 설정 */
+  width: 100%;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
-    background-color: #333; /* 호버 시 색상 변경 */
+    background-color: #333;
   }
 `;
 
 const FooterLink = styled(Link)`
-  margin-top: 10px; /* 위쪽 여백 */
-  color: purple; /* 글자 색상 */
-  text-decoration: none; /* 밑줄 없음 */
+  margin-top: 10px;
+  color: purple;
+  text-decoration: none;
+  font-size: 0.8em;
 `;
 
 const DropdownMenu = styled.div`
   position: absolute;
   width: 120px;
-  top: 60px; /* Img 바로 아래에 위치 */
-  left: 98%; /* 오른쪽으로 이동 */
-  transform: translateX(-50%); /* 중앙 정렬 */
+  top: 60px;
+  left: 98%;
+  transform: translateX(-50%);
   background-color: white;
   border: 1px solid black;
-  z-index: 1000; /* 드롭다운 메뉴가 다른 요소 위에 표시되도록 */
+  z-index: 1000;
 `;
 
 const DropdownItem = styled(Link)`
@@ -137,7 +139,7 @@ const DropdownItem = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    background-color: #f0f0f0; /* 호버 시 배경 색상 변경 */
+    background-color: #f0f0f0;
   }
 `;
 
@@ -146,19 +148,28 @@ function NavigationBar() {
   const [showModal, setShowModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [data, setData] = useState({ id: "", password: "" });
-  const [error, setError] = useState(""); // 오류 메시지 상태 추가
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // 컴포넌트가 마운트될 때 로그인 상태를 확인
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    const refreshToken = getCookie('refreshToken');
+    if (accessToken && refreshToken) {
+      setIsLoggedIn(true); // 두 토큰이 모두 존재하면 로그인 상태로 설정
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData({ ...data, [name]: value }); // 입력값 업데이트
+    setData({ ...data, [name]: value });
   };
 
   const handleClick = () => {
     if (!isLoggedIn) {
-      setShowModal(true); // 로그인 안 된 상태에서 클릭하면 모달 띄움
+      setShowModal(true);
     } else {
-      setShowDropdown((prev) => !prev); // 로그인 된 상태에서 드롭다운 토글
+      setShowDropdown((prev) => !prev);
     }
   };
 
@@ -176,10 +187,10 @@ function NavigationBar() {
 
     try {
       await login(data);
-      setIsLoggedIn(true); // 로그인 성공 시 상태 업데이트
-      navigate("/"); // 로그인 성공 시 메인페이지로 이동
+      setIsLoggedIn(true);
+      navigate("/");
       window.alert("로그인되었습니다.");
-      setShowModal(false); // 로그인 후 모달 닫기
+      setShowModal(false);
     } catch (error) {
       console.error("로그인 에러:", error.response ? error.response.data : error.message);
       setError("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
@@ -187,19 +198,21 @@ function NavigationBar() {
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // 로그아웃 처리
-    setShowDropdown(false); // 드롭다운 메뉴 닫기
+    setIsLoggedIn(false);
+    setShowDropdown(false);
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    removeCookie('username');
   };
 
   return (
     <Nav>
       <Logo src="" alt="logo" />
       <Subnav>
-        <Link to="/">진단소개</Link>
+        <Link to="/">진단 소개</Link>
         <Link to="/">AI 피부진단</Link>
         <Link to="/">기초화장품 추천</Link>
         <Link to="/">진단 결과</Link>
-        <Link to="/login">로그인</Link>
         <Img src="accountimg.png" onClick={handleClick} />
         {showDropdown && (
           <DropdownMenu>

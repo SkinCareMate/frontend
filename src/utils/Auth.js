@@ -18,10 +18,12 @@ export const login = async (userData) => {
     
     console.log('서버 응답:', response);  // 디버깅을 위한 로그
 
+
     if (response.data.access && response.data.refresh) {
       // 쿠키에 accessToken, refreshToken 저장
       setCookie('accessToken', response.data.access);
       setCookie('refreshToken', response.data.refresh);
+      setCookie('username', response.data.user.name);
       
       // axios의 기본 헤더에 accessToken 설정
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
