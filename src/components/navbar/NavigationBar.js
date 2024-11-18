@@ -12,8 +12,8 @@ const Nav = styled.div`
   right: 0;
   z-index: 1000;
   height: 80px;
-  padding-left: 20%;
-  padding-right: 15%;
+  padding-left: 10%;
+  padding-right: 10%;
   padding-top: 25px;
   padding-bottom: 20px;
   display: flex;
@@ -68,6 +68,16 @@ const Img = styled.img`
   width: 50px;
   height: 50px;
   cursor: pointer;
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 `;
 
 const Modal = styled.div`
@@ -193,7 +203,14 @@ function NavigationBar() {
       setShowModal(false);
     } catch (error) {
       console.error("로그인 에러:", error.response ? error.response.data : error.message);
-      setError("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+  
+      if (error.response && error.response.status === 401) {
+          // 401 상태 코드일 경우 서버의 'detail' 메시지를 에러로 설정
+          setError(error.response.data.detail);
+      } else {
+          // 다른 오류 상황에 대한 기본 에러 메시지 - 403
+          setError(error.response.data.detail);
+      }
     }
   };
 
@@ -203,52 +220,66 @@ function NavigationBar() {
     removeCookie('accessToken');
     removeCookie('refreshToken');
     removeCookie('username');
+    navigate("/");
+  };
+
+  const handleNavigate = () => {
+    navigate('/');
+  }
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();  // 모달 내부 클릭 시 이벤트 전파 중단
   };
 
   return (
     <Nav>
-      <Logo src="" alt="logo" />
+      <Logo src="logo5.png" alt="logo" onClick={handleNavigate} style={{width: '275px'}}/>
       <Subnav>
         <Link to="/">진단 소개</Link>
-        <Link to="/">AI 피부진단</Link>
-        <Link to="/">기초화장품 추천</Link>
-        <Link to="/">진단 결과</Link>
-        <Img src="accountimg.png" onClick={handleClick} />
+        <Link to="/aianalysis">내 피부 진단</Link>
+        <Link to="/cosmeticrecommend">화장품 추천</Link>
+        <Link to="/llmresult">진단 결과 확인</Link>
+        <Img src="account.png" onClick={handleClick} />
         {showDropdown && (
           <DropdownMenu>
             <DropdownItem to="/mypage">마이페이지</DropdownItem>
-            <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem>
+            <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem> {/* 호버하면 메뉴 나오게 변경하기 */}
           </DropdownMenu>
         )}
       </Subnav>
 
       {showModal && (
-        <Modal>
-          <ModalTitle>로그인하기</ModalTitle>
-          <InputWrapper>
-            <label htmlFor="id">아이디</label>
-            <Input
-              type="text"
-              id="id"
-              name="id"
-              value={data.id}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <label htmlFor="password">비밀번호</label>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              value={data.password}
-              onChange={handleChange}
-            />
-          </InputWrapper>
-          {error && <p style={{ color: "red", fontSize: "0.8em" }}>{error}</p>}
-          <LoginButton onClick={handleLogin}>로그인</LoginButton>
-          <FooterLink to="/forgot-password">아이디/비밀번호를 잊으셨나요? | 회원가입</FooterLink>
-        </Modal>
+        <ModalOverlay onClick={handleCloseModal}>
+          <Modal onClick={handleModalClick}>
+            <ModalTitle>로그인하기</ModalTitle>
+            <InputWrapper>
+              <label htmlFor="id">아이디</label>
+              <Input
+                type="text"
+                id="id"
+                name="id"
+                value={data.id}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="password">비밀번호</label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+              />
+            </InputWrapper>
+            {error && <p style={{ color: "red", fontSize: "0.8em" }}>{error}</p>}
+            <LoginButton onClick={handleLogin}>로그인</LoginButton>
+            <div style={{ display: 'flex', gap: '40px', marginTop: '10px' }}>
+              <FooterLink to="">아이디/비밀번호를 잊으셨나요?</FooterLink>
+              <FooterLink to="/signup">회원가입</FooterLink>
+            </div>
+          </Modal>
+        </ModalOverlay>
       )}
     </Nav>
   );

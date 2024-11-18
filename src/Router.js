@@ -4,6 +4,10 @@ import Login from "./pages/useraccount/Login";
 import ImageMotion from "./pages/imageMotion/ImageMotion";
 import Signup from "./pages/useraccount/Signup";
 import Mypage from "./pages/useraccount/Mypage";
+import AIAnalysis from "./pages/AIAnalysis";
+import LLMResult from "./pages/LLMResult";
+import CosmeticRecommend from "./pages/CosmeticRecommend";
+import Survey from "./pages/Survey";
 
 function Router() {
   return (
@@ -13,6 +17,10 @@ function Router() {
       <Route path="/imagemotion" element={<ImageMotion />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/mypage" element={<Mypage />} />
+      <Route path="/aianalysis" element={<AIAnalysis />} />
+      <Route path="/llmresult" element={<LLMResult />} />
+      <Route path="/cosmeticrecommend" element={<CosmeticRecommend />} />
+      <Route path="/survey" element={<Survey />} />
     </Routes>
   );
 }

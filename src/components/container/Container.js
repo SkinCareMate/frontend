@@ -18,3 +18,13 @@ export const ContentContainer = styled.div`
 export const CenterContainer = styled.div`
   margin: 0 auto;
 `;
+
+export const ResultContentContainer = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
