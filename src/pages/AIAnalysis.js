@@ -43,21 +43,26 @@ const CategoryTitle = styled.h3`
 `;
 
 const ImageContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 1rem auto;
+  width: 300px;
+  height: 400px;
+  border: 1px solid #85EDDB;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transition: 0.12s ease-in;
+  background-color: #3DD7BD;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
 `;
 
 const FaceImage = styled.img`
-  width: 100%;
-  height: auto;
-  max-width: 600px;
-  max-height: 600px;
-  object-fit: contain;
+  height: 400px;
+  width: auto;
+  object-fit: cover;
 `;
 
 const ResultText = styled.p`
@@ -129,7 +134,6 @@ const AIContainer = styled.div`
 `;
 
 const AIContent = styled.div`
-  white-space: pre-line;
   line-height: 1.8;
   font-size: 1.1rem;
   color: #333;
@@ -261,11 +265,15 @@ function AIAnalysis() {
 
             if (res.status === 200) {
                 console.log("피부 분석 완료", res.data);
-                setAnalysisResult(res.data);
-                setIsAnalyzing(false);
-                setFaceImg(res.data.marked_image_url)
-                console.log(faceImg);
-                alert("피부 분석이 완료되었습니다!");
+                
+                // 2초 대기 후 결과 처리
+                setTimeout(() => {
+                    setAnalysisResult(res.data);
+                    setFaceImg(res.data.marked_image_url);
+                    console.log(faceImg);
+                    alert("피부 분석이 완료되었습니다!");
+                    setIsAnalyzing(false);
+                }, 1000); // 2000ms = 2초
             }
         } catch (error) {
             setIsAnalyzing(false);
@@ -276,6 +284,10 @@ function AIAnalysis() {
     };
 
     const renderAnalysisResult = (result) => {
+        if (!result) {
+            return null;
+        }
+
         const foreheadPigmentation = result.forehead_pigmentation_prediction;
         const foreheadMoisture = result.forehead_moisture_prediction;
         const leftCheekMoisture = result.left_cheek_moisture_prediction;
@@ -306,7 +318,9 @@ function AIAnalysis() {
             <ResultSection>
                 <ResultCategory>
                     <ResultContainer>
-                        <FaceImage src={`http://localhost:8000${faceImg}`} alt="Face analysis" />
+                        <ImageContainer>
+                            <FaceImage src={`http://localhost:8000${faceImg}`} alt="Face analysis" />
+                        </ImageContainer>
                         <TopTextContainer>
                             <ResultText>
                                 이마 색소침착: {pigmentationMapping[foreheadPigmentation]}<br />
@@ -341,7 +355,7 @@ function AIAnalysis() {
         try {
             setIsGeneratingLLM(true);
             const response = await axios.post("/api/generate/", {
-                prediction_id: 2
+                prediction_id: 1
             }, {
                 headers: {
                     'Authorization': `Bearer ${getCookie("accessToken")}`
@@ -369,7 +383,7 @@ function AIAnalysis() {
     return (
         <MainContainer>
             <NavigationBar />
-            <ContentContainer style={{backgroundColor: '#00CEAF'}}>
+            <div style={{backgroundColor: '#00CEAF', width: '100%', marginTop: '100px', padding: '20px'}}>
                 <DragDrop 
                     onFileChange={handleFileChange}
                     previewImage={previewImage}
@@ -377,17 +391,19 @@ function AIAnalysis() {
                     onUpload={handleUpload}
                     style={{borderColor: 'white', backgroundColor: '#00DBBC'}}
                 />
-            </ContentContainer>
+            </div>
+            <div style={{backgroundColor: '#FFE544', width: '100%'}}>
+              <ResultTitle>진단 결과</ResultTitle>
+              {renderAnalysisResult(analysisResult)}      
+            </div>
             {analysisResult && (
                 <ResultContentContainer>
-                    <ResultTitle>진단 결과</ResultTitle>
-                    {renderAnalysisResult(analysisResult)}
                     {!llmResult && (
                         <>
                             {isAuthenticated() ? (
                                 !isGeneratingLLM ? (
                                     <LLMButton onClick={handleGenerateLLM}>
-                                        AI 상세 진단 보기
+                                        AI 피부 솔루션 보기
                                     </LLMButton>
                                 ) : (
                                     <LoadingContainer>

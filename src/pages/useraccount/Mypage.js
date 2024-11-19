@@ -35,7 +35,7 @@ function Mypage() {
 
     useEffect(() => {
         if (!isAuthenticated()) {
-            navigate('/');
+            navigate('/signup');
             window.alert('로그인이 필요합니다.');
         }
         const userName = getCookie('username');

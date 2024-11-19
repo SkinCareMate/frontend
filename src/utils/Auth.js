@@ -18,7 +18,6 @@ export const login = async (userData) => {
     
     console.log('서버 응답:', response);  // 디버깅을 위한 로그
 
-
     if (response.data.access && response.data.refresh) {
       // 쿠키에 accessToken, refreshToken 저장
       setCookie('accessToken', response.data.access);
@@ -34,8 +33,10 @@ export const login = async (userData) => {
       throw new Error('토큰이 없습니다.');
     }
   } catch (error) {
-    console.error('로그인 에러:', error.response ? error.response.data : error.message);
-    throw error;
+    // error.response가 존재하는지 확인
+    const errorMessage = error.response ? error.response.data : '서버에 연결할 수 없습니다.';
+    console.error('로그인 에러:', errorMessage);
+    throw new Error(errorMessage); // 에러 메시지를 던짐
   }
 };
 

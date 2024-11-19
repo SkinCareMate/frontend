@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ContentContainer, MainContainer } from '../components/container/Container';
 import NavigationBar from '../components/navbar/NavigationBar';
+import { getCookie } from '../Cookie';
 
 const questions = [
     {
@@ -36,7 +37,7 @@ function Survey() {
         };
 
         try {
-            const response = await axios.post('/api/surveys/', requestBody);
+            const response = await axios.post(`/api/surveys/`, requestBody);
             console.log('설문 제출 성공:', response.data);
             // 추가적인 성공 처리 로직
         } catch (error) {

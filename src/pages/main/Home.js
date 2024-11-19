@@ -4,13 +4,11 @@ import { ContentContainer, MainContainer } from "../../components/container/Cont
 import ImageMotion from "../imageMotion/ImageMotion";
 
 function Home() {
-
   return (
     <MainContainer>
       <NavigationBar />
       <ContentContainer>
         <ImageMotion />
-        <h1>dd</h1>
       </ContentContainer>
     </MainContainer>
   );

@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 const Title = styled.h1`
   margin: 2rem 0;
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
   color: white;
   position: absolute;
-  left: 12%;
+  left: 10%;
   top: 25%;
   text-align: center;
 `;
@@ -32,7 +32,6 @@ const GuideText = styled.div`
   transform: translateY(-50%);
   color: white;
   text-align: center;
-  font-weight: bold;
 `;
 
 const UploadSection = styled.div`
@@ -283,7 +282,7 @@ const DragDrop = ({ onFileChange, previewImage, isAnalyzing, onUpload, analysisR
   return (
     <DragDropContainer>
       <div>
-        <Title>피부 진단</Title>
+        <Title>AI 피부 진단</Title>
         <GuideText>
           피부 진단을 위해<br/>
           <span style={{ color: 'yellow' }}>얼굴 사진</span>을 업로드해주세요.<br/>
