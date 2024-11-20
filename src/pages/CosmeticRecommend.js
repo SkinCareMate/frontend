@@ -270,6 +270,7 @@ function CosmeticRecommend() {
                     </div>
                 </div>
             </ContentContainer>
+            {}
             <Footer />
         </MainContainer>
     );

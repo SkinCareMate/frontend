@@ -15,6 +15,7 @@ const ResultTitle = styled.h2`
   margin-bottom: 3rem;
   font-size: 3rem;
   font-weight: bold;
+  padding-top: 2%
 `;
 
 const ResultSection = styled.div`
@@ -58,6 +59,7 @@ const ImageContainer = styled.div`
   background-position: center;
   position: relative;
   overflow: hidden;
+  top: 25%;
 `;
 
 const FaceImage = styled.img`
@@ -193,16 +195,16 @@ const ResultTextContainer = styled.div`
 
 const TopTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  top: -140px;
+  top: -80px;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;
-  height: 130px;
+  height: 170px;
 `;
 
 const BottomTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  bottom: -60px;
+  bottom: -180px;
   left: 0;
   transform: translateX(-50%);
   width: 300px;
@@ -211,7 +213,7 @@ const BottomTextContainer = styled(ResultTextContainer)`
 
 const BottomTextContainer2 = styled(ResultTextContainer)`
   position: absolute;
-  bottom: -60px;
+  bottom: -180px;
   left: 100%;
   transform: translateX(-50%);
   width: 300px;
@@ -221,19 +223,19 @@ const BottomTextContainer2 = styled(ResultTextContainer)`
 const LeftTextContainer = styled(ResultTextContainer)`
   position: absolute;
   left: -300px;
-  top: 40%;
+  top: 65%;
   transform: translateY(-50%);
   width: 300px;
-  height: 130px;
+  height: 170px;
 `;
 
 const RightTextContainer = styled(ResultTextContainer)`
   position: absolute;
   right: -300px;
-  top: 40%;
+  top: 65%;
   transform: translateY(-50%);
   width: 300px;
-  height: 130px;
+  height: 170px;
 `;
 
 const ResultContainer = styled.div`
@@ -256,6 +258,7 @@ function AIAnalysis() {
     const [isGeneratingLLM, setIsGeneratingLLM] = useState(false);
     const [llmResult, setLlmResult] = useState(null);
     const [faceImg, setFaceImg] = useState(null);
+    const [diagnosticId, setDiagnosticId] = useState(null);
 
     const handleFileChange = (selectedFiles) => {
         if (selectedFiles.length > 0) {
@@ -279,6 +282,7 @@ function AIAnalysis() {
             const res = await axios.post('/api/diagnostics/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getCookie("accessToken")}`
                 }
             });
 
@@ -289,7 +293,8 @@ function AIAnalysis() {
                 setTimeout(() => {
                     setAnalysisResult(res.data);
                     setFaceImg(res.data.marked_image_url);
-                    console.log("내가 보고 싶은거", analysisResult);
+                    setDiagnosticId(res.data.id);
+                    console.log("내가 보고 싶은거", res.data.id);
                     alert("피부 분석이 완료되었습니다!");
                     setIsAnalyzing(false);
                 }, 1000); // 1000ms = 1초
@@ -339,6 +344,12 @@ function AIAnalysis() {
             "촉촉함"
         ]
 
+        const poreMapping = [
+          "모공이 거의 보이지 않음",
+          "모공이 약간 보임",
+          "모공이 많이 보임"
+        ]
+
         return (
             <ResultSection>
                 <ResultCategory>
@@ -377,7 +388,7 @@ function AIAnalysis() {
                               <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>왼쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[leftCheekMoisture]}<br />
-                                {pigmentationMapping[leftCheekPore]}
+                                {poreMapping[leftCheekPore]}
                               </p>
                             </ResultText>
                         </LeftTextContainer>
@@ -386,7 +397,7 @@ function AIAnalysis() {
                               <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>오른쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[rightCheekMoisture]}<br />
-                                {pigmentationMapping[rightCheekPore]}
+                                {poreMapping[rightCheekPore]}
                               </p>
                             </ResultText>
                         </RightTextContainer>
@@ -397,10 +408,15 @@ function AIAnalysis() {
     };
 
     const handleGenerateLLM = async () => {
+        if (!diagnosticId) {
+            window.alert('피부 분석을 먼저 완료해주세요.');
+            return;
+        }
+
         try {
             setIsGeneratingLLM(true);
             const response = await axios.post("/api/generate/", {
-                prediction_id: 1
+                prediction_id: diagnosticId
             }, {
                 headers: {
                     'Authorization': `Bearer ${getCookie("accessToken")}`
@@ -438,7 +454,7 @@ function AIAnalysis() {
                 />
             </div>
             {analysisResult && (
-              <div style={{backgroundColor: '#FFE544', width: '100%'}}>
+              <div style={{backgroundColor: '#FFE544', width: '100%', height: '1100px'}}>
                 <ResultTitle>진단 결과</ResultTitle>
                 {renderAnalysisResult(analysisResult)}      
               </div>
@@ -484,6 +500,9 @@ function AIAnalysis() {
                 </ResultContentContainer>
             )}
             <ContentContainer />
+            {analysisResult && (
+              <Footer />
+            )}
             <Footer />
         </MainContainer>
     );
