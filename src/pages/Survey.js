@@ -93,8 +93,9 @@ function Survey() {
 
     return (
         <ContentContainer>
-            <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}> {/* 설문 영역 가운데 정렬 및 너비 설정 */}
-                <h2>설문에 참여해 주세요!</h2>
+            <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center',   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', backgroundColor: 'white', borderRadius: '15px' }}> {/* 설문 영역 가운데 정렬 및 너비 설정 */}
+                <h1 style={{paddingTop: '50px', fontSize: '3em'}}>설문하기</h1>
+                <h2 style={{ paddingTop: '10px', fontSize: '1.7em'}}>설문에 참여해 주세요!</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* 질문과 보기 가운데 정렬 */}
                     {questions.map((item, index) => (
                         <div key={index} style={{ margin: '1rem', textAlign: 'center', fontSize: '1.5em' }}> {/* 질문 가운데 정렬 */}
@@ -122,7 +123,7 @@ function Survey() {
                         </div>
                     ))}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem', paddingBottom: '30px'}}>
                     {hasResponse ? (
                         <button 
                             onClick={handleUpdate} 
@@ -134,7 +135,8 @@ function Survey() {
                                 padding: '10px 20px',
                                 border: 'none',
                                 borderRadius: '5px',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+
                             }}
                         >
                             수정하기
@@ -150,7 +152,8 @@ function Survey() {
                                 padding: '10px 20px',
                                 border: 'none',
                                 borderRadius: '5px',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                height: '70px',
                             }}
                         >
                             제출하기

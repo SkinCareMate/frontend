@@ -242,7 +242,8 @@ function NavigationBar() {
         <Img src="account.png" onClick={handleClick} />
         {showDropdown && (
           <DropdownMenu>
-            <DropdownItem to="/mypage">마이페이지</DropdownItem>
+            <DropdownItem to="/">마이페이지</DropdownItem>
+            <DropdownItem to="/mypage">설문 관리</DropdownItem>
             <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem> {/* 호버하면 메뉴 나오게 변경하기 */}
           </DropdownMenu>
         )}
