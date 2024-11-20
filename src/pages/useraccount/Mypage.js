@@ -92,31 +92,19 @@ function Mypage() {
     }
 
     return (
-        <MainContainer>
+        <MainContainer style={{backgroundColor: '#F8F9FA'}}>
             <NavigationBar />
-            <SubNav>
-                <SubNavItem onClick={() => handleScrollToSection('section1')}>내 정보</SubNavItem>
-                <SubNavItem onClick={() => handleScrollToSection('section2')}>설문</SubNavItem>
-                <SubNavItem onClick={() => handleScrollToSection('section3')}>진단 결과</SubNavItem>
-            </SubNav>
+
             <ContentContainer>
-                <div id="section1">
-                    <h1>{name}님</h1>
-                </div>
                 <div id="section2">
-                    <ToggleButton onClick={toggleSurvey}>
-                        {isSurveyVisible ? '▶ 진단 사전 설문' : '▼ 진단 사전 설문'}
-                    </ToggleButton>
-                    {isSurveyVisible && (
+
+                    
                         <SurveyContainer>
                             <Survey />
                         </SurveyContainer>
-                    )}
+                    
                 </div>
-                <div id="section3">
-                    <h2>진단 결과</h2>
-                    <h3 onClick={navigatePast}>과거진단결과보기</h3>
-                </div>
+
             </ContentContainer>
             <Footer />
         </MainContainer>

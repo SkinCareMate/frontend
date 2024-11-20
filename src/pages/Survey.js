@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ContentContainer } from '../components/container/Container';
 import { getCookie } from '../Cookie';
+import { useNavigate } from 'react-router-dom';
 
 const questions = [
     {
@@ -23,6 +24,7 @@ function Survey() {
     const [hasResponse, setHasResponse] = useState(false); // 응답 유무 확인
     const userId = getCookie('userid'); // userId 가져오기
     const accessToken = getCookie('accessToken'); // 토큰 가져오기
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchSurvey = async () => {
@@ -51,7 +53,6 @@ function Survey() {
     };
 
     const handleSubmit = async () => {
-        // 응답을 비율로 변환
         const requestBody = {
             atopy_level: responses[0],  // 첫 번째 질문 응답 비율
             acne_level: responses[1],    // 둘 번째 질문 응답 비율
@@ -65,6 +66,8 @@ function Survey() {
                 }
             });
             console.log('설문 제출 성공:', response.data);
+            window.alert("설문이 저장되었습니다.");
+            navigate("/");
             setHasResponse(true);
         } catch (error) {
             console.error('설문 제출 실패:', error);
@@ -86,6 +89,8 @@ function Survey() {
                 }
             });
             console.log('설문 수정 성공:', response.data);
+            window.alert("설문이 수정되었습니다.");
+            navigate("/");
         } catch (error) {
             console.error('설문 수정 실패:', error);
         }

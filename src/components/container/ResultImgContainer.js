@@ -390,7 +390,13 @@ function ResultImgContainer() {
             "건조함",
             "건조함의 정도가 적당함",
             "촉촉함"
-        ];
+        ]
+
+        const poreMapping = [
+          "모공이 거의 보이지 않음",
+          "모공이 약간 보임",
+          "모공이 많이 보임"
+        ]
 
         return (
             <ResultSection>
@@ -401,16 +407,17 @@ function ResultImgContainer() {
                         </ImageContainer>
                         <TopTextContainer>
                             <ResultText>
-                                <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>이마</p>
+                                <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>이마</p>
                                 <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                   {pigmentationMapping[foreheadPigmentation]}<br />
                                   {moistureMapping[foreheadMoisture]}
                                 </p>
+                                
                             </ResultText>
                         </TopTextContainer>
                         <BottomTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>입술</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>입술</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {lipsDrynessMapping[lipsDryness]}<br />
                               </p>
@@ -418,7 +425,7 @@ function ResultImgContainer() {
                         </BottomTextContainer>
                         <BottomTextContainer2>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>피부 타입</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>피부 타입</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {skinTypeMapping[skinType]}
                               </p>
@@ -426,19 +433,19 @@ function ResultImgContainer() {
                         </BottomTextContainer2>
                         <LeftTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>왼쪽 볼</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>왼쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[leftCheekMoisture]}<br />
-                                {pigmentationMapping[leftCheekPore]}
+                                {poreMapping[leftCheekPore]}
                               </p>
                             </ResultText>
                         </LeftTextContainer>
                         <RightTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>오른쪽 볼</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>오른쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[rightCheekMoisture]}<br />
-                                {pigmentationMapping[rightCheekPore]}
+                                {poreMapping[rightCheekPore]}
                               </p>
                             </ResultText>
                         </RightTextContainer>
@@ -513,7 +520,7 @@ function ResultImgContainer() {
                     </Slider>
                 </SliderContainer>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                    <button onClick={handleButtonClick} style={{ marginTop: '50px', marginBottom: '30px', width: '200px', height: '50px', fontSize: '1.5em', borderRadius: '10px', backgroundColor: '#00CEAF', color: 'white', cursor: 'pointer' }}>과거 진단결과 보기</button>
+                    <button onClick={handleButtonClick} style={{ marginTop: '50px', marginBottom: '30px', width: '250px', height: '70px', fontSize: '1.5em', borderRadius: '10px', backgroundColor: '#00CEAF', color: 'white', cursor: 'pointer' }}>과거 진단결과 보기</button>
                 </div>
             </div>
             {/* 과거 진단 결과 보기 버튼 클릭 시에만 결과 표시 */}
@@ -527,7 +534,7 @@ function ResultImgContainer() {
             {/* 과거 진단 결과 보기 버튼 클릭 시에만 결과 표시 */}
             {aiDiagnosisResult && (
                 <div style={{ marginTop: '50px', width: '100%', maxWidth: '3000px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white' }}>
-                    <div style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', paddingTop: '20px', paddingBottom: '20px', width: '50%', margin: '0 auto', marginTop: '20px' }}>
+                    <div style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', paddingTop: '20px', paddingBottom: '20px', width: '50%', margin: '0 auto', marginTop: '20px', paddingLeft: '200px', paddingRight: '200px', width: '1400px' }}>
                         <Title>AI 진단 결과</Title>
                         {loading ? (
                             <p style={{ textAlign: 'center' }}>진단 결과를 불러오는 중입니다...</p>

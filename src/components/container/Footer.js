@@ -44,7 +44,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterContent>
-        <FooterSection style={{borderRight: '1px solid #fff'}}>
+        <FooterSection style={{borderRight: '1px solid #444444'}}>
           <Logo>
             <img src='logo6.png' style={{maxWidth: '100%'}} alt="Logo" />
           </Logo>
@@ -53,7 +53,7 @@ const Footer = () => {
           <h4 style={{fontSize: '1.3em', marginLeft: '65px'}}>회사 소개</h4>
           <p style={{marginLeft: '65px'}}> 당신의 피부 상태를 AI로 진단하고<br /><br />알맞은 스킨케어 제품을 추천합니다.</p>
         </FooterSection>
-        <FooterSection style={{borderLeft: '1px solid #fff'}}>
+        <FooterSection style={{borderLeft: '1px solid #444444'}}>
           <h4 style={{fontSize: '1.3em', marginLeft: '100px'}}>연락처</h4>
           <p style={{marginLeft: '100px'}}>이메일: contact@skinai.com</p>
           <p style={{marginLeft: '100px'}}>전화: 123-456-7890</p>
