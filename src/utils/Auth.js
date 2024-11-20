@@ -44,6 +44,8 @@ export const login = async (userData) => {
 export const logout = () => {
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  removeCookie('username');
+  removeCookie('userid');
   delete axios.defaults.headers.common['Authorization'];
 };
 
