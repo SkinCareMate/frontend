@@ -15,7 +15,6 @@ export const setCookie = (name, value, options = {}) => {
 
 export const getCookie = (name) => {
     const value = cookies.get(name);
-    console.log(`쿠키 이름: ${name}, 쿠키 값: ${value}`); 
     return value ? decodeURIComponent(value) : null; // 디코딩 후 반환
 };
 

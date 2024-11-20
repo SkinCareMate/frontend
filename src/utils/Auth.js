@@ -26,7 +26,7 @@ export const login = async (userData) => {
       setCookie('userid', response.data.user.id);
       
       // axios의 기본 헤더에 accessToken 설정
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
+      //axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
       
       return response.data;
     } else {
