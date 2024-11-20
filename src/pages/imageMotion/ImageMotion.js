@@ -19,10 +19,37 @@ const Step = styled.div`
   height: 800px;
   font-size: 3em;
   padding-top: 100px;
+
 `;
 
 const AnimatedContent = styled.div`
-  animation: ${props => props.isVisible ? slideUp : 'none'} 1.5s ease-out;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transition: opacity 0.1s ease-out;
+  animation: ${props => props.isVisible ? slideUp : 'none'} 5s ease-out;$1opacity: ${props => props.isVisible ? 1 : 0}; animation: ${props => props.isVisible ? slideUp : 'none'} 1s ease-out;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  animation: ${props => props.isVisible ? slideUp : 'none'} 5s ease-out;$1opacity: 0;$2animation: ${props => props.isVisible ? slideUp : 'none'} 1s ease-out forwards;
+  animation-delay: ${props => props.isVisible ? '0s' : '0s'};
+  transition: opacity 1s ease-out;
+`;
+
+// 스캔 라인 애니메이션 정의
+const scanLineAnimation = keyframes`
+    0% {
+        transform: translateY(0); /* 시작 위치: 이미지 위쪽 */
+    }
+    50% {
+        transform: translateY(6000%); /* 끝 위치: 이미지 아래쪽 */
+    }
+`;
+
+const ScanLine = styled.div`
+    position: absolute;
+    top: 0; /* 이미지의 위쪽에 위치 */
+    left: 0;
+    right: 0;
+    height: 5px; /* 스캔 라인의 높이 */
+    background-color: yellow; /* 스캔 라인의 색상 */
+    animation: ${scanLineAnimation} 5s ease-in-out infinite; /* 애니메이션 설정: 이미지 아래까지 내려갔다가 다시 올라옴 */
 `;
 
 function ImageMotion() {
@@ -159,17 +186,17 @@ function ImageMotion() {
     };
 
     const additionalContentStyle = {
+        width: '100%',
         transform: 'translateY(0)',
         transition: 'transform 0.5s ease-out',
         textAlign: 'center',
         color: 'black',
         marginTop: '250vh',
         zIndex: 2,
-        position: 'relative'
+        position: 'relative',
     };
 
     const pTagsOpacity = getFadeOutOpacity(0.8, 1);
-
 
     return (
         <div ref={containerRef} style={{ height: '175vh' }}>
@@ -195,9 +222,10 @@ function ImageMotion() {
                 </div>
             </div>
             <div style={additionalContentStyle}>
-                <Step ref={step1Ref} bgColor="#F8F8F8">
+                <Step ref={step1Ref} isVisible={step1Visible} bgColor="#FFFFFF">
                     <AnimatedContent isVisible={step1Visible}>
-                        Step 1. 피부 진단 준비하기<br /><br />올바른 사진을 준비해주세요.
+                        Step 1. 피부 진단 준비하기<br /><br />
+                        <p style={{fontSize: '0.75em', marginTop: '-20px'}}>올바른 사진을 준비해주세요.</p>
                     </AnimatedContent>
                     <div style={{ display: 'flex', alignItems: 'flex-start', paddingLeft: '300px', fontSize: '0.5em', paddingTop: '150px' }}>
                         <AnimatedContent isVisible={step1Visible}>
@@ -248,26 +276,45 @@ function ImageMotion() {
                         </div>
                     </div>
                 </Step>
-                <Step ref={step2Ref} bgColor="#D0FFF9">
+                <Step ref={step2Ref} isVisible={step2Visible} bgColor="#D0FFF9" style={{width: '100%'}}>
                     <AnimatedContent isVisible={step2Visible}>
-                        Step 2. AI를 통한 맞춤형 피부 관리법 확인하기<br /><br />내 피부에 맞는 관리법을 알아보세요!
+                        Step 2. AI를 통한 맞춤형 피부 관리법 확인하기<br /><br />
+                        <p style={{fontSize: '0.75em', marginTop: '-20px'}}>내 피부에 맞는 관리법을 알아보세요!</p>
                     </AnimatedContent>
-                    <AnimatedContent isVisible={step2Visible} style={{ paddingRight: '300px', fontSize: '0.5em', paddingTop: '150px', textAlign: 'right' }}>
-                        피부 진단을 마치신 후,<br/><br/>아래 'AI 피부 솔루션 보기' 버튼을 클릭하면<br/><br/>결과를 확인할 수 있습니다.
-                    </AnimatedContent>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', paddingTop: '100px' }}>
+                        <AnimatedContent isVisible={step2Visible} style={{ display: 'flex', paddingRight: '200px', fontSize: '0.5em', textAlign: 'right', position: 'relative' }}>
+                            <div style={{ position: 'relative', overflow: 'hidden', width: '300px', height: '300px', marginLeft: '300px', marginRight: '250px' }}>
+                                <img 
+                                    src="mainfaceimg.jpeg" 
+                                    style={{ 
+                                        width: '300px', 
+                                        height: '300px', 
+                                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', 
+                                        borderRadius: '10px', 
+                                        filter: 'brightness(0.7)' // 이미지 어둡게 처리
+                                    }} 
+                                />
+                                <ScanLine />
+                            </div>
+                            <br/><br/>피부 진단을 마치신 후,<br/><br/>아래 AI 피부 솔루션 보기 버튼을 클릭하면<br/><br/>결과를 확인할 수 있습니다.
+                        </AnimatedContent>
+                    </div>
                 </Step>
-                <Step ref={step3Ref} bgColor="#FFE544">
+                <Step ref={step3Ref} isVisible={step3Visible} bgColor="#FFE544" style={{width: '100%'}}>
                     <AnimatedContent isVisible={step3Visible}>
-                        Step 3. 나만을 위한 화장품 추천받기<br /><br />피부에 꼭 맞는 기초 화장품을 추천해드립니다!
+                        Step 3. 나만을 위한 화장품 추천받기<br /><br />
+                        <p style={{fontSize: '0.75em', marginTop: '-20px'}}>피부에 꼭 맞는 기초 화장품을 추천해드립니다!</p>
                     </AnimatedContent>
-                    <AnimatedContent isVisible={step3Visible} style={{ paddingRight: '300px', fontSize: '0.5em', paddingTop: '150px', textAlign: 'right' }}>
-                        먼저 마이페이지에서 설문에 참여해주세요.<br/><br/>진단 기록을 클릭하면, <br/><br/>해당 진단에 맞는 화장품을 추천받으실 수 있습니다.
-                    </AnimatedContent>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', paddingTop: '100px' }}>
+                        <AnimatedContent isVisible={step3Visible} style={{  display: 'flex', paddingRight: '200px', fontSize: '0.5em', textAlign: 'right' }}>
+                            <img src="https://i.pinimg.com/736x/71/51/d1/7151d131849e9cacb46faff661f5f351.jpg" style={{ width: '300px', height: '300px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', borderRadius: '10px', marginLeft: '300px', marginRight: '250px' }}></img>
+                            <br/><br/>먼저 마이페이지에서 설문에 참여해주세요.<br/><br/>진단 기록을 클릭하면, <br/><br/>해당 진단에 맞는 화장품을 추천받으실 수 있습니다.
+                        </AnimatedContent>
+                    </div>
                 </Step>
             </div>
         </div>
     );
-
 }
 
 export default ImageMotion;

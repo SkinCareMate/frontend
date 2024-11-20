@@ -6,6 +6,7 @@ export const MainContainer = styled.div`
   display: flex; /* Flexbox 사용 */
   flex-direction: column; /* 세로로 배열 */
   align-items: center;
+  width: 100%;
 `;
 
 export const ContentContainer = styled.div`
@@ -13,6 +14,8 @@ export const ContentContainer = styled.div`
   width: 100%;
   margin-top: 100px;
   padding: 20px;
+  flex: 1;
+  padding-bottom: 150px;
 `;
 
 export const CenterContainer = styled.div`

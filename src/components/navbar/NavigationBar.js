@@ -233,7 +233,7 @@ function NavigationBar() {
 
   return (
     <Nav>
-      <Logo src="logo5.png" alt="logo" onClick={handleNavigate} style={{width: '275px'}}/>
+      <Logo src="logo5.png" alt="logo" onClick={handleNavigate} style={{width: '275px', cursor: 'pointer'}}/>
       <Subnav>
         <Link to="/">진단 소개</Link>
         <Link to="/aianalysis">내 피부 진단</Link>

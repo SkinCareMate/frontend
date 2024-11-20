@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../utils/Auth";
 import { getCookie } from "../Cookie";
 import ReactMarkdown from 'react-markdown';
+import Footer from "../components/container/Footer";
 
 const ResultTitle = styled.h2`
   text-align: center;
   margin-bottom: 3rem;
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: bold;
 `;
 
@@ -192,30 +193,47 @@ const ResultTextContainer = styled.div`
 
 const TopTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  top: -90px;
+  top: -140px;
   left: 50%;
   transform: translateX(-50%);
+  width: 300px;
+  height: 130px;
 `;
 
 const BottomTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  bottom: -70px;
-  left: 50%;
+  bottom: -60px;
+  left: 0;
   transform: translateX(-50%);
+  width: 300px;
+  height: 130px;
+`;
+
+const BottomTextContainer2 = styled(ResultTextContainer)`
+  position: absolute;
+  bottom: -60px;
+  left: 100%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 130px;
 `;
 
 const LeftTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  left: -250px;
-  top: 50%;
+  left: -300px;
+  top: 40%;
   transform: translateY(-50%);
+  width: 300px;
+  height: 130px;
 `;
 
 const RightTextContainer = styled(ResultTextContainer)`
   position: absolute;
-  right: -250px;
-  top: 50%;
+  right: -300px;
+  top: 40%;
   transform: translateY(-50%);
+  width: 300px;
+  height: 130px;
 `;
 
 const ResultContainer = styled.div`
@@ -226,6 +244,7 @@ const ResultContainer = styled.div`
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 15px;
+  height: 500px
 `;
 
 function AIAnalysis() {
@@ -266,14 +285,14 @@ function AIAnalysis() {
             if (res.status === 200) {
                 console.log("피부 분석 완료", res.data);
                 
-                // 2초 대기 후 결과 처리
+                // 1초 대기 후 결과 처리
                 setTimeout(() => {
                     setAnalysisResult(res.data);
                     setFaceImg(res.data.marked_image_url);
                     console.log(faceImg);
                     alert("피부 분석이 완료되었습니다!");
                     setIsAnalyzing(false);
-                }, 1000); // 2000ms = 2초
+                }, 1000); // 1000ms = 1초
             }
         } catch (error) {
             setIsAnalyzing(false);
@@ -314,6 +333,12 @@ function AIAnalysis() {
             "지성"
         ];
 
+        const lipsDrynessMapping = [
+            "건조함",
+            "건조함의 정도가 적당함",
+            "촉촉함"
+        ]
+
         return (
             <ResultSection>
                 <ResultCategory>
@@ -323,26 +348,46 @@ function AIAnalysis() {
                         </ImageContainer>
                         <TopTextContainer>
                             <ResultText>
-                                이마 색소침착: {pigmentationMapping[foreheadPigmentation]}<br />
-                                이마 수분: {moistureMapping[foreheadMoisture]}
+                                <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>이마</p>
+                                <p style={{marginTop: '0', fontSize: '1.5em'}}>
+                                  {pigmentationMapping[foreheadPigmentation]}<br />
+                                  {moistureMapping[foreheadMoisture]}
+                                </p>
+                                
                             </ResultText>
                         </TopTextContainer>
                         <BottomTextContainer>
                             <ResultText>
-                                입술 수분: {moistureMapping[lipsDryness]}<br />
-                                피부 타입: {skinTypeMapping[skinType]}
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>입술</p>
+                              <p style={{marginTop: '0', fontSize: '1.5em'}}>
+                                {lipsDrynessMapping[lipsDryness]}<br />
+                              </p>
                             </ResultText>
                         </BottomTextContainer>
+                        <BottomTextContainer2>
+                            <ResultText>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>피부 타입</p>
+                              <p style={{marginTop: '0', fontSize: '1.5em'}}>
+                                {skinTypeMapping[skinType]}
+                              </p>
+                            </ResultText>
+                        </BottomTextContainer2>
                         <LeftTextContainer>
                             <ResultText>
-                                왼쪽 볼 수분: {moistureMapping[leftCheekMoisture]}<br />
-                                왼쪽 볼 모공: {pigmentationMapping[leftCheekPore]}
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>왼쪽 볼</p>
+                              <p style={{marginTop: '0', fontSize: '1.5em'}}>
+                                {moistureMapping[leftCheekMoisture]}<br />
+                                {pigmentationMapping[leftCheekPore]}
+                              </p>
                             </ResultText>
                         </LeftTextContainer>
                         <RightTextContainer>
                             <ResultText>
-                                오른쪽 볼 수분: {moistureMapping[rightCheekMoisture]}<br />
-                                오른쪽 볼 모공: {pigmentationMapping[rightCheekPore]}
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>오른쪽 볼</p>
+                              <p style={{marginTop: '0', fontSize: '1.5em'}}>
+                                {moistureMapping[rightCheekMoisture]}<br />
+                                {pigmentationMapping[rightCheekPore]}
+                              </p>
                             </ResultText>
                         </RightTextContainer>
                     </ResultContainer>
@@ -436,6 +481,8 @@ function AIAnalysis() {
                     </ResetButton>
                 </ResultContentContainer>
             )}
+            <ContentContainer />
+            <Footer />
         </MainContainer>
     );
 }

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ContentContainer, MainContainer } from "../../components/container/Container";
 import NavigationBar from "../../components/navbar/NavigationBar";
 import styled from "styled-components";
+import Footer from "../../components/container/Footer";
 
 const StyledMainContainer = styled(MainContainer)`
   background-color: #ffffff; /* 연한 녹색 배경을 MainContainer에 설정 */
@@ -252,6 +253,7 @@ function Signup() {
           <SignupButton onClick={handleSignup}>회원가입</SignupButton>
         </SignupForm>
       </CenteredContentContainer>
+      <Footer />
     </StyledMainContainer>
   );
 }

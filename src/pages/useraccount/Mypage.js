@@ -6,6 +6,7 @@ import { getCookie } from '../../Cookie';
 import { isAuthenticated } from '../../utils/Auth';
 import { useNavigate } from 'react-router-dom';
 import Survey from '../Survey';
+import Footer from '../../components/container/Footer';
 
 const ToggleButton = styled.button`
     background-color: white;
@@ -28,6 +29,34 @@ const SurveyContainer = styled.div`
     margin-top: -100px;
 `;
 
+const SubNav = styled.div`
+    position: fixed;
+    left: 200px;
+    top: 200px;
+    width: 200px;
+    height: auto;
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+`;
+
+const SubNavItem = styled.button`
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    text-align: left;
+    color: #333;
+
+    &:hover {
+        color: #007bff;
+    }
+`;
+
 function Mypage() {
     const [name, setName] = useState('');
     const [isSurveyVisible, setIsSurveyVisible] = useState(false);
@@ -42,28 +71,56 @@ function Mypage() {
         if (userName) {
             setName(userName);
         }
-    }, [])
+    }, []);
 
     const toggleSurvey = () => {
         setIsSurveyVisible(!isSurveyVisible);
     };
 
+    const handleScrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+        if (sectionId === 'section2') {
+            setIsSurveyVisible(true);
+        }
+    };
+
+    const navigatePast = () => {
+        navigate('/llmresult');
+    }
+
     return (
         <MainContainer>
             <NavigationBar />
+            <SubNav>
+                <SubNavItem onClick={() => handleScrollToSection('section1')}>내 정보</SubNavItem>
+                <SubNavItem onClick={() => handleScrollToSection('section2')}>설문</SubNavItem>
+                <SubNavItem onClick={() => handleScrollToSection('section3')}>진단 결과</SubNavItem>
+            </SubNav>
             <ContentContainer>
-                <h1>{name}님</h1>
-                <ToggleButton onClick={toggleSurvey}>
-                    {isSurveyVisible ? '▶ 진단 사전 설문' : '▼ 진단 사전 설문'}
-                </ToggleButton>
-                {isSurveyVisible && (
-                    <SurveyContainer>
-                        <Survey />
-                    </SurveyContainer>
-                )}
+                <div id="section1">
+                    <h1>{name}님</h1>
+                </div>
+                <div id="section2">
+                    <ToggleButton onClick={toggleSurvey}>
+                        {isSurveyVisible ? '▶ 진단 사전 설문' : '▼ 진단 사전 설문'}
+                    </ToggleButton>
+                    {isSurveyVisible && (
+                        <SurveyContainer>
+                            <Survey />
+                        </SurveyContainer>
+                    )}
+                </div>
+                <div id="section3">
+                    <h2>진단 결과</h2>
+                    <h3 onClick={navigatePast}>과거진단결과보기</h3>
+                </div>
             </ContentContainer>
+            <Footer />
         </MainContainer>
-    )
+    );
 }
 
 export default Mypage;

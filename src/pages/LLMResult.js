@@ -1,10 +1,12 @@
 import axios from "axios";
-import { ContentContainer, MainContainer } from "../components/container/Container";
+import { ContentContainer, MainContainer, ResultContentContainer } from "../components/container/Container";
 import NavigationBar from "../components/navbar/NavigationBar";
 import { useEffect, useState } from "react";
 import { isAuthenticated } from "../utils/Auth";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ResultImgContainer from "../components/container/ResultImgContainer";
+import Footer from "../components/container/Footer";
 
 const Title = styled.h1`
   text-align: center;
@@ -19,7 +21,7 @@ const AIContainer = styled.div`
   background-color: #f8f9fa;
   border-radius: 15px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1140px;
 `;
 
 const AIContent = styled.div`
@@ -67,24 +69,24 @@ function LLMResult() {
             return;
         }
 
-        const fetchDiagnosisResult = async () => {
-            try {
-                const response = await axios.post("/api/generate/", {
-                    prediction_id: 1
-                });
-                setDiagnosisResult(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error("진단 결과 조회 실패", error);
-                window.alert("진단 결과를 불러오는데 실패했습니다.");
-                setLoading(false);
-            }
-        };
+        // const fetchDiagnosisResult = async () => {
+        //     try {
+        //         const response = await axios.post("/api/generate/", {
+        //             prediction_id: 17
+        //         });
+        //         setDiagnosisResult(response.data);
+        //         setLoading(false);
+        //     } catch (error) {
+        //         console.error("진단 결과 조회 실패", error);
+        //         window.alert("진단 결과를 불러오는데 실패했습니다.");
+        //         setLoading(false);
+        //     }
+        // };
 
-        fetchDiagnosisResult();
+        // fetchDiagnosisResult();
     }, [navigate]);
-
-    const formatDate = (dateString) => {
+    
+const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('ko-KR', {
             year: 'numeric',
@@ -94,31 +96,38 @@ function LLMResult() {
             minute: '2-digit'
         });
     };
+    
 
     return (
         <MainContainer>
             <NavigationBar />
-            <ContentContainer>
-                <Title>AI 진단 결과</Title>
-                {loading ? (
-                    <p style={{ textAlign: 'center' }}>진단 결과를 불러오는 중입니다...</p>
-                ) : diagnosisResult ? (
-                    <AIContainer>
-                        <AIHeader>
-                            <AIIcon>AI</AIIcon>
-                            <h3>AI 상세 진단</h3>
-                        </AIHeader>
-                        <AIContent>
-                            {diagnosisResult.diagnosis_text}
-                        </AIContent>
-                        <DateText>
-                            진단일시: {formatDate(diagnosisResult.created_at)}
-                        </DateText>
-                    </AIContainer>
-                ) : (
-                    <p style={{ textAlign: 'center' }}>진단 결과가 없습니다.</p>
-                )}
-            </ContentContainer>
+            <ResultImgContainer />
+            {/* <ContentContainer>
+                <div style={{borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', paddingTop: '50px', paddingBottom: '50px', width: '80%', margin: '0 auto' }}>
+                    <Title>AI 진단 결과</Title>
+                    {loading ? (
+                        <p style={{ textAlign: 'center' }}>진단 결과를 불러오는 중입니다...</p>
+                    ) : diagnosisResult ? (
+                        <AIContainer>
+                            <AIHeader>
+                                <AIIcon>AI</AIIcon>
+                                <h3>AI 상세 진단</h3>
+                            </AIHeader>
+                            <AIContent>
+                                {diagnosisResult.diagnosis_text}
+                            </AIContent>
+                            <DateText>
+                                진단일시: {formatDate(diagnosisResult.created_at)}
+                            </DateText>
+                        </AIContainer>
+                    ) : (
+                        <p style={{ textAlign: 'center' }}>진단 결과가 없습니다.</p>
+                    )}
+                </div>
+                
+            </ContentContainer> */}
+            <ContentContainer />
+            <Footer />
         </MainContainer>
     );
 }
