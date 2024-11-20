@@ -289,7 +289,7 @@ function AIAnalysis() {
                 setTimeout(() => {
                     setAnalysisResult(res.data);
                     setFaceImg(res.data.marked_image_url);
-                    console.log(faceImg);
+                    console.log("내가 보고 싶은거", analysisResult);
                     alert("피부 분석이 완료되었습니다!");
                     setIsAnalyzing(false);
                 }, 1000); // 1000ms = 1초
@@ -348,7 +348,7 @@ function AIAnalysis() {
                         </ImageContainer>
                         <TopTextContainer>
                             <ResultText>
-                                <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>이마</p>
+                                <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>이마</p>
                                 <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                   {pigmentationMapping[foreheadPigmentation]}<br />
                                   {moistureMapping[foreheadMoisture]}
@@ -358,7 +358,7 @@ function AIAnalysis() {
                         </TopTextContainer>
                         <BottomTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>입술</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>입술</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {lipsDrynessMapping[lipsDryness]}<br />
                               </p>
@@ -366,7 +366,7 @@ function AIAnalysis() {
                         </BottomTextContainer>
                         <BottomTextContainer2>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>피부 타입</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>피부 타입</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {skinTypeMapping[skinType]}
                               </p>
@@ -374,7 +374,7 @@ function AIAnalysis() {
                         </BottomTextContainer2>
                         <LeftTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>왼쪽 볼</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>왼쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[leftCheekMoisture]}<br />
                                 {pigmentationMapping[leftCheekPore]}
@@ -383,7 +383,7 @@ function AIAnalysis() {
                         </LeftTextContainer>
                         <RightTextContainer>
                             <ResultText>
-                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px'}}>오른쪽 볼</p>
+                              <p style={{fontSize: '2em', marginBottom: '20px', marginTop: '20px', color: '#444444', fontWeight: 'bold'}}>오른쪽 볼</p>
                               <p style={{marginTop: '0', fontSize: '1.5em'}}>
                                 {moistureMapping[rightCheekMoisture]}<br />
                                 {pigmentationMapping[rightCheekPore]}
@@ -437,10 +437,12 @@ function AIAnalysis() {
                     style={{borderColor: 'white', backgroundColor: '#00DBBC'}}
                 />
             </div>
-            <div style={{backgroundColor: '#FFE544', width: '100%'}}>
-              <ResultTitle>진단 결과</ResultTitle>
-              {renderAnalysisResult(analysisResult)}      
-            </div>
+            {analysisResult && (
+              <div style={{backgroundColor: '#FFE544', width: '100%'}}>
+                <ResultTitle>진단 결과</ResultTitle>
+                {renderAnalysisResult(analysisResult)}      
+              </div>
+            )}
             {analysisResult && (
                 <ResultContentContainer>
                     {!llmResult && (

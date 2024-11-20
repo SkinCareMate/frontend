@@ -93,66 +93,70 @@ function Survey() {
 
     return (
         <ContentContainer>
-            <h2>설문에 참여해 주세요!</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                {questions.map((item, index) => (
-                    <div key={index} style={{ margin: '1rem' }}>
-                        <h3>{`Q${index + 1}: ${item.question}`}</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            {item.options.map((value, optionIndex) => (
-                                <div 
-                                    key={value} 
-                                    onClick={() => handleResponseChange(index, optionIndex + 1)} // 클릭 시 응답 업데이트 (1부터 시작)
-                                    style={{
-                                        border: '1px solid #ccc',
-                                        borderRadius: '5px',
-                                        padding: '10px',
-                                        margin: '5px 0',
-                                        cursor: 'pointer',
-                                        backgroundColor: responses[index] === (optionIndex + 1) ? '#e0f7fa' : 'transparent' // 선택된 응답 강조
-                                    }}
-                                >
-                                    {value}
-                                </div>
-                            ))}
+            <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}> {/* 설문 영역 가운데 정렬 및 너비 설정 */}
+                <h2>설문에 참여해 주세요!</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* 질문과 보기 가운데 정렬 */}
+                    {questions.map((item, index) => (
+                        <div key={index} style={{ margin: '1rem', textAlign: 'center', fontSize: '1.5em' }}> {/* 질문 가운데 정렬 */}
+                            <h3>{`Q${index + 1}: ${item.question}`}</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> {/* 보기를 가운데 정렬 */}
+                                {item.options.map((value, optionIndex) => (
+                                    <div 
+                                        key={value} 
+                                        onClick={() => handleResponseChange(index, optionIndex + 1)} // 클릭 시 응답 업데이트 (1부터 시작)
+                                        style={{
+                                            border: '1px solid #ccc',
+                                            borderRadius: '25px', // 테두리 둥글게 설정
+                                            padding: '10px',
+                                            margin: '5px 0',
+                                            cursor: 'pointer',
+                                            backgroundColor: responses[index] === (optionIndex + 1) ? '#e0f7fa' : 'transparent', // 선택된 응답 강조
+                                            width: '100%',
+                                            maxWidth: '400px'
+                                        }}
+                                    >
+                                        {value}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-                {hasResponse ? (
-                    <button 
-                        onClick={handleUpdate} 
-                        style={{
-                            fontSize: '1.5em',
-                            fontWeight: 'bold',
-                            backgroundColor: '#00CEAF',
-                            color: '#fff',
-                            padding: '10px 20px',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        수정하기
-                    </button>
-                ) : (
-                    <button 
-                        onClick={handleSubmit} 
-                        style={{
-                            fontSize: '1.5em',
-                            fontWeight: 'bold',
-                            backgroundColor: '#00CEAF',
-                            color: '#fff',
-                            padding: '10px 20px',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        제출하기
-                    </button>
-                )}
+                    ))}
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+                    {hasResponse ? (
+                        <button 
+                            onClick={handleUpdate} 
+                            style={{
+                                fontSize: '1.5em',
+                                fontWeight: 'bold',
+                                backgroundColor: '#00CEAF',
+                                color: '#fff',
+                                padding: '10px 20px',
+                                border: 'none',
+                                borderRadius: '5px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            수정하기
+                        </button>
+                    ) : (
+                        <button 
+                            onClick={handleSubmit} 
+                            style={{
+                                fontSize: '1.5em',
+                                fontWeight: 'bold',
+                                backgroundColor: '#00CEAF',
+                                color: '#fff',
+                                padding: '10px 20px',
+                                border: 'none',
+                                borderRadius: '5px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            제출하기
+                        </button>
+                    )}
+                </div>
             </div>
         </ContentContainer>
     );
