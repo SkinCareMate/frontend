@@ -61,7 +61,7 @@ function CosmeticRecommend() {
                 }
             } catch (error) {
                 window.alert("설문 데이터를 불러오지 못 했습니다.");
-                navigate("/mypage");
+                navigate("/survey");
             }
         };
 

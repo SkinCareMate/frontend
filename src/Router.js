@@ -16,11 +16,11 @@ function Router() {
       <Route path="/login" element={<Login />} />
       <Route path="/imagemotion" element={<ImageMotion />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/mypage" element={<Mypage />} />
+      <Route path="/survey" element={<Mypage />} />
       <Route path="/aianalysis" element={<AIAnalysis />} />
       <Route path="/llmresult" element={<LLMResult />} />
       <Route path="/cosmeticrecommend" element={<CosmeticRecommend />} />
-      <Route path="/survey" element={<Survey />} />
+      <Route path="/dd" element={<Survey />} />
     </Routes>
   );
 }
