@@ -1,6 +1,6 @@
 import React from "react";
 import NavigationBar from "../../components/navbar/NavigationBar";
-import { ContentContainer, MainContainer } from "../../components/container/Container";
+import { MainContainer } from "../../components/container/Container";
 import ImageMotion from "../imageMotion/ImageMotion";
 import Footer from "../../components/container/Footer";
 

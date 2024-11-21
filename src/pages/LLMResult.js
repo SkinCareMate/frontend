@@ -8,54 +8,54 @@ import styled from "styled-components";
 import ResultImgContainer from "../components/container/ResultImgContainer";
 import Footer from "../components/container/Footer";
 
-const Title = styled.h1`
-  text-align: center;
-  margin: 2rem 0;
-  font-size: 2rem;
-  font-weight: bold;
-`;
+// const Title = styled.h1`
+//   text-align: center;
+//   margin: 2rem 0;
+//   font-size: 2rem;
+//   font-weight: bold;
+// `;
 
-const AIContainer = styled.div`
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f8f9fa;
-  border-radius: 15px;
-  width: 100%;
-  max-width: 1140px;
-`;
+// const AIContainer = styled.div`
+//   margin: 2rem auto;
+//   padding: 2rem;
+//   background-color: #f8f9fa;
+//   border-radius: 15px;
+//   width: 100%;
+//   max-width: 1140px;
+// `;
 
-const AIContent = styled.div`
-  white-space: pre-line;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  color: #333;
-`;
+// const AIContent = styled.div`
+//   white-space: pre-line;
+//   line-height: 1.8;
+//   font-size: 1.1rem;
+//   color: #333;
+// `;
 
-const AIHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
-`;
+// const AIHeader = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 1.5rem;
+//   gap: 1rem;
+// `;
 
-const AIIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: #007AFF;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-`;
+// const AIIcon = styled.div`
+//   width: 40px;
+//   height: 40px;
+//   background-color: #007AFF;
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: white;
+//   font-weight: bold;
+// `;
 
-const DateText = styled.p`
-  text-align: right;
-  color: #666;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-`;
+// const DateText = styled.p`
+//   text-align: right;
+//   color: #666;
+//   font-size: 0.9rem;
+//   margin-top: 1rem;
+// `;
 
 function LLMResult() {
     const navigate = useNavigate();

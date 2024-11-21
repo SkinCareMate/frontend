@@ -60,12 +60,6 @@ const ResultCategory = styled.div`
   align-items: center;
 `;
 
-const CategoryTitle = styled.h3`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-`;
-
 const ImageContainer = styled.div`
   width: 300px;
   height: 400px;
@@ -174,22 +168,6 @@ const DiagnosisWrapper = styled.div`
   padding-top: 20px;
   margin-top: 80px;
   width: 100%;
-`;
-
-const AIResultContainer = styled.div`
-  background-color: #FFFFFF;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-top: 1rem;
-  text-align: center;
-  background-color: #f8f9fa;
-  width: 200px;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const AIContainer = styled.div`
@@ -453,10 +431,6 @@ function ResultImgContainer() {
                 </ResultCategory>
             </ResultSection>
         );
-    };
-
-    const renderAiResult = (result) => {
-
     };
 
     const formatDate = (dateString) => {
