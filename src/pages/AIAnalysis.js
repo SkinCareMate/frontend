@@ -279,14 +279,13 @@ function AIAnalysis() {
         try {
             setIsAnalyzing(true);
             setAnalysisResult(null);
-            const res = await axios.post('/api/diagnostics/', formData, {
+            if (!isAuthenticated()) {
+              const res = await axios.post('/api/diagnostics/', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${getCookie("accessToken")}`
+                  'Content-Type': 'multipart/form-data'
                 }
-            });
-
-            if (res.status === 200) {
+              });
+              if (res.status === 200) {
                 console.log("피부 분석 완료", res.data);
                 
                 // 1초 대기 후 결과 처리
@@ -299,6 +298,29 @@ function AIAnalysis() {
                     setIsAnalyzing(false);
                 }, 1000); // 1000ms = 1초
             }
+            } else {
+              const res = await axios.post('/api/diagnostics/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getCookie("accessToken")}`
+                }
+              });
+              if (res.status === 200) {
+                console.log("피부 분석 완료", res.data);
+                
+                // 1초 대기 후 결과 처리
+                setTimeout(() => {
+                    setAnalysisResult(res.data);
+                    setFaceImg(res.data.marked_image_url);
+                    setDiagnosticId(res.data.id);
+                    console.log("내가 보고 싶은거", res.data.id);
+                    alert("피부 분석이 완료되었습니다!");
+                    setIsAnalyzing(false);
+                }, 1000); // 1000ms = 1초
+            }
+            }
+
+            
         } catch (error) {
             setIsAnalyzing(false);
             setAnalysisResult(null);
