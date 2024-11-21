@@ -191,28 +191,37 @@ function NavigationBar() {
     setError("");
 
     if (!data.id || !data.password) {
-      setError("아이디와 비밀번호를 모두 입력해주세요.");
-      return;
+        setError("아이디와 비밀번호를 모두 입력해주세요.");
+        return;
     }
 
     try {
-      await login(data);
-      setIsLoggedIn(true);
-      navigate("/");
-      window.alert("로그인되었습니다.");
-      setShowModal(false);
+        await login(data);
+        setIsLoggedIn(true);
+        navigate("/");
+        window.alert("로그인되었습니다.");
+        setShowModal(false);
     } catch (error) {
-      console.error("로그인 에러:", error.response ? error.response.data : error.message);
-  
-      if (error.response && error.response.status === 401) {
-          // 401 상태 코드일 경우 서버의 'detail' 메시지를 에러로 설정
-          setError(error.response.data.detail);
-      } else {
-          // 다른 오류 상황에 대한 기본 에러 메시지 - 403
-          setError(error.response.data.detail);
-      }
+        console.error("로그인 에러:", error.response ? error.response.data : error.message);
+
+        if (error.response) {
+            if (error.response.status === 401) {
+                // 401 상태 코드 처리
+                setError(error.response.data.detail);
+            } else if (error.response.status === 403) {
+                // 403 상태 코드 처리
+                window.alert("이메일 인증을 먼저 진행해주세요.");
+            } else {
+                // 기타 에러 처리
+                setError("알 수 없는 오류가 발생했습니다. 다시 시도해주세요.");
+            }
+        } else {
+            // 서버로부터 응답을 받지 못한 경우
+            setError("이메일 인증을 먼저 진행해주세요.");
+        }
     }
-  };
+};
+
 
   const handleLogout = async () => {
     try {

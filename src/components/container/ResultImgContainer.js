@@ -86,7 +86,7 @@ const FaceImage = styled.img`
 const ResultText = styled.p`
   margin-top: 1rem;
   font-size: 1rem;
-  color: #666;
+  color: #666; 
   text-align: center;
   width: 100%;
 `;
