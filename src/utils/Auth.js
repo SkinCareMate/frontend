@@ -47,6 +47,7 @@ export const logout = () => {
   removeCookie('username');
   removeCookie('userid');
   delete axios.defaults.headers.common['Authorization'];
+  window.alert("로그아웃 되었습니다.");
 };
 
 export const isAuthenticated = () => {

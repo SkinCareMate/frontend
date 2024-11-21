@@ -214,13 +214,22 @@ function NavigationBar() {
     }
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowDropdown(false);
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-    removeCookie('username');
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      // 로그아웃 작업이 모두 완료된 후에 navigate 호출
+      navigate("/");
+
+      setIsLoggedIn(false);
+      setShowDropdown(false);
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      removeCookie('username');
+      removeCookie('userid');
+
+      window.alert("로그아웃되었습니다.");
+    } catch (error) {
+      console.error("로그아웃 에러:", error);
+    }
   };
 
   const handleNavigate = () => {
@@ -243,7 +252,7 @@ function NavigationBar() {
         {showDropdown && (
           <DropdownMenu>
             <DropdownItem to="/mypage">마이페이지</DropdownItem>
-            <DropdownItem to="/mypage">설문 관리</DropdownItem>
+            <DropdownItem to="/survey">설문 관리</DropdownItem>
             <DropdownItem onClick={handleLogout}>로그아웃</DropdownItem> {/* 호버하면 메뉴 나오게 변경하기 */}
           </DropdownMenu>
         )}
